@@ -3,6 +3,8 @@ require 'rubygems'
 require 'sinatra'
 require './pdf-filler.rb'
 
+set :public_folder, File.dirname(__FILE__) + '/static'
+
 #return a filled PDF as a result of post data
 post '/fill' do
   pdf = Pdf_Filler.new
