@@ -1,0 +1,8 @@
+<h1>Form for {{ pdf }}</h1>
+<form method="post" action="/fill">
+  <input type="hidden" name="pdf" value="{{ pdf }}" />
+{% for field in fields %}
+  <label for="{{ field }}">{{ field }}<input type="text" name="{{field}}" id="{{ field }}" /></label><br />
+{% endfor %}
+  <input type="submit" value="Submit" />
+</form>

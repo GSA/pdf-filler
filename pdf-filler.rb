@@ -76,7 +76,7 @@ class Pdf_Filler
     pdftk = PdfForms.new( '/usr/local/bin/pdftk' )
     
     #return list of all fields
-    pdftk.get_field_names( source_pdf ).to_json
+    pdftk.get_field_names( source_pdf )
 
   end
   
