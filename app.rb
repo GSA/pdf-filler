@@ -2,8 +2,13 @@
 require 'rubygems'
 require 'sinatra'
 require 'thin'
+require 'markdown'
 require 'liquid'
 require './pdf-filler.rb'
+
+set :public_folder, File.dirname(__FILE__) + '/static'
+set :root, File.dirname(__FILE__)
+set :views, File.dirname(__FILE__) + "/views"
 
 #return a filled PDF as a result of post data
 post '/fill' do
