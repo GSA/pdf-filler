@@ -4,6 +4,7 @@ class Pdf_Filler
   require 'pdf_forms'
   require 'prawn'
   require 'prawn-fillform'
+  require 'json'
   
   #Grab remote PDF file and save to temporary location
   def download_pdf_to_temp_file( url )
@@ -62,6 +63,19 @@ class Pdf_Filler
     #return resulting PDF  
     filled_pdf
     
+  end
+  
+  def get_fields( url ) 
+  
+    #grab external PDF and store locally
+    source_pdf = download_pdf_to_temp_file( url )
+    
+    #init new pdftk wrapper
+    pdftk = PdfForms.new( '/usr/local/bin/pdftk' )
+    
+    #return list of all fields
+    pdftk.get_field_names( source_pdf ).to_json
+
   end
   
 end
