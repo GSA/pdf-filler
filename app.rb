@@ -1,4 +1,5 @@
 # app.rb
+require 'rubygems'
 require 'sinatra'
 require 'thin'
 require 'liquid'
