@@ -2,16 +2,16 @@
   <head>
   </head>
   <body>
-    <form method="post" id="form">
+    <form method="post" id="form" action="/fill" >
       <input type="hidden" name="pdf" value="http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf" id="pdf" />
-      <input type="submit" value="Get Filled PDF" />
+      <input type="submit" id="submit" value="Get Filled PDF" />
     </form>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
       jQuery(document).ready(function($){
         $.getJSON( '/fields.json?pdf=' + $('#form #pdf').val() , function(data){
           $.each(data, function(k,v){
-            $('<label>' + v + ':<input type="text" name="' + v + '"/></label><br />').prependTo( $('#form' ) );
+            $('<label>' + v + ':<input type="text" name="' + v + '"/></label><br />').insertBefore( $('#submit' ) );
           })
         });          
       });

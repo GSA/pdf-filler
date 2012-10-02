@@ -8,7 +8,7 @@ set :public_folder, File.dirname(__FILE__) + '/static'
 #return a filled PDF as a result of post data
 post '/fill' do
   pdf = Pdf_Filler.new
-  pdf.fill( params['pdf'], params )
+  send_file pdf.fill( params['pdf'], params ).path
 end
 
 #return JSON list of field names

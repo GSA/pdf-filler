@@ -37,7 +37,7 @@ class Pdf_Filler
     filled_pdf = Tempfile.new( ['pdf', '.pdf'] )
     
     #Fill fillable fields via pdftk
-    pdftk.fill_form source_pdf.path, step_1_result.path, data.find_all { !:at? }
+    pdftk.fill_form source_pdf.path, step_1_result.path, data
     
     #Fill non-fillabel PDF fields via prawn
     Prawn::Document.generate filled_pdf.path, :template => step_1_result.path do |pdf|
@@ -47,19 +47,21 @@ class Pdf_Filler
       
       #loop through each non-fillable field and
       # add to PDF at specified coordinates
-      fields = data.find_all { :at? }
+      fields = data.find_all {|field| field.kind_of?(Array) }
       fields.each do |field|
-      
+        
+        #puts field.inspect 
+        
         #place the prawn pointer on the page with the field
-        pdf.go_to_page field[:page]
+        #pdf.go_to_page field[:page]
         
         #write the contents of the field to the page
-        pdf.draw_text field[:text], :at => field[:at]
+        #pdf.draw_text field[:text], :at => field[:at]
         
       end #end fields loop
     
     end #end prawn loop
-    
+
     #return resulting PDF  
     filled_pdf
     
