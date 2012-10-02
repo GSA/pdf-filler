@@ -1,6 +1,6 @@
 # app.rb
-require 'rubygems'
 require 'sinatra'
+require 'thin'
 require 'liquid'
 require './pdf-filler.rb'
 
