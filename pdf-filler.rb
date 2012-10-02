@@ -55,7 +55,7 @@ class Pdf_Filler
         pdf.go_to_page field[:page]
         
         #write the contents of the field to the page
-        pdf.draw_text field[:text], :at => field[:at]
+        pdf.draw_text field[:value], :at => field[:at]
         
       end #end fields loop
     
