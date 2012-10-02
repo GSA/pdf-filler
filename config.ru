@@ -1,2 +1,2 @@
-require 'heroku-sinatra-app'
+require 'app'
 run Sinatra::Application
