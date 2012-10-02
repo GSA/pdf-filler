@@ -2,6 +2,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'thin'
+require 'open-uri'
 require 'markdown'
 require 'liquid'
 require './pdf-filler.rb'
