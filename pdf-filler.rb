@@ -2,6 +2,8 @@ class Pdf_Filler
   
   require 'open-uri'
   require 'pdf_forms'
+  require 'prawn'
+  require 'prawn-fillform'
   
   #Grab remote PDF file and save to temporary location
   def download_pdf_to_temp_file( url )
@@ -10,7 +12,7 @@ class Pdf_Filler
     file = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
     
     #read remote file into temporary file
-    file << open(self.url).read
+    file << open(url).read
     
     #return temporary file
     file
@@ -25,7 +27,7 @@ class Pdf_Filler
     source_pdf = download_pdf_to_temp_file( url )
     
     #pdftk object for filling in PDF
-    pdftk = PdfForms.new(PDFTK_PATH)
+    pdftk = PdfForms.new( '/usr/local/bin/pdftk' )
     
     #PDF with fillable fields filled
     step_1_result = Tempfile.new( ['pdf', '.pdf'] )
@@ -34,10 +36,10 @@ class Pdf_Filler
     filled_pdf = Tempfile.new( ['pdf', '.pdf'] )
     
     #Fill fillable fields via pdftk
-    pdftk.fill_form source_pdf.path, filled_in_pdf_file.path, data.find_all { !:at? }
+    pdftk.fill_form source_pdf.path, step_1_result.path, data.find_all { !:at? }
     
     #Fill non-fillabel PDF fields via prawn
-    Prawn::Document.generate filled_in_pdf_file.path, :template => template_pdf_file.path do |pdf|
+    Prawn::Document.generate filled_pdf.path, :template => step_1_result.path do |pdf|
     
       #set default font and size
       pdf.font("Helvetica", :size=> 10)
