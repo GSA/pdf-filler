@@ -55,8 +55,8 @@ For example, to structure an HTML form, you may do so as follows:
     
 ```
 
-Hosting PDF Filler
-------------------
+Running
+-------
 
 You can freely use PDF Filler as a web service. But if you'd like to grab the source code and host it locally, it's actually pretty easy.`
 
