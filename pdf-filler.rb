@@ -23,6 +23,10 @@ class Pdf_Filler
   #given a PDF an array of fields -> values
   # return a PDF with the given fields filled out
   def fill( url, data )
+  
+    #regular expression to determine if fillable or non-fillable field
+    #validates 1,2 and 1,2,3
+    key_regex = /^(?<x>[0-9]+),(?<y>[0-9]+)(,(?<page>[0-9]+))?$/
     
     #source PDF file to fill in
     source_pdf = download_pdf_to_temp_file( url )
@@ -37,8 +41,8 @@ class Pdf_Filler
     filled_pdf = Tempfile.new( ['pdf', '.pdf'] )
     
     #Fill fillable fields via pdftk
-    #Fillable fields are strings, so filter acordingly
-    pdftk.fill_form source_pdf.path, step_1_result.path, data.find_all { |field| field.is_a?(String) }
+    #filter fillable fields by key regex
+    pdftk.fill_form source_pdf.path, step_1_result.path, data.find_all { |key, value| !key[ key_regex] }
     
     #Fill non-fillabel PDF fields via prawn
     Prawn::Document.generate filled_pdf.path, :template => step_1_result.path do |pdf|
@@ -48,14 +52,19 @@ class Pdf_Filler
       
       #loop through each non-fillable field and
       # add to PDF at specified coordinates
-      fields = data.find_all { |field| !field.is_a?(String) }
-      fields.each do |field|
-                
+      fields = data.find_all { |key, value| key[ key_regex] }
+      fields.each do |key, value|
+      
+        #break the field key down into its reprentative parts
+        # this will give us a hash with x, y, and (optionally) page
+        at = key.match( key_regex )
+        
         #place the prawn pointer on the page with the field
-        pdf.go_to_page field[:page]
+        #if we're not given a page, assume page one
+        pdf.go_to_page at[:page].to_i || 1
         
         #write the contents of the field to the page
-        pdf.draw_text field[:value], :at => field[:at]
+        pdf.draw_text value, :at => [ at[ :x ].to_i, at[:y].to_i ]
         
       end #end fields loop
     

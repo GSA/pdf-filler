@@ -31,3 +31,16 @@ Generating HTML Forms
 **To get a generic HTML representation of any fillable PDF form**
 
 `/form.html?pdf={URL To PDF}`
+
+Non-Fillable PDFs
+-----------------
+
+Non-Fillable PDFs (e.g., scanned or other PDFs without structured forms) require passing X, Y coordinates, and a page number along with the form data. Each field should be an array consisting of:
+
+* `page` - the page # of the field
+* `x` - the X value of the position of the field
+* `y` - the Y value of the position of the field
+* `value` the field value
+
+For example, to structure an HTML form, you may do so as follows:
+
