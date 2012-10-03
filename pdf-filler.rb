@@ -9,7 +9,7 @@ class Pdf_Filler
   #path to the pdftk binary
   #if you don't have it, you can get it here:
   #http://www.pdflabs.com/docs/install-pdftk/
-  set :path_to_pdftk, '/usr/local/bin/pdftk'
+  PATH_TO_PDFTK = '/usr/local/bin/pdftk'
   
   #Grab remote PDF file and save to temporary location
   def download_pdf_to_temp_file( url )
@@ -37,7 +37,7 @@ class Pdf_Filler
     source_pdf = download_pdf_to_temp_file( url )
     
     #pdftk object for filling in PDF
-    pdftk = PdfForms.new( :path_to_pdftk )
+    pdftk = PdfForms.new( PATH_TO_PDFTK )
     
     #PDF with fillable fields filled
     step_1_result = Tempfile.new( ['pdf', '.pdf'] )
@@ -87,7 +87,7 @@ class Pdf_Filler
     source_pdf = download_pdf_to_temp_file( url )
     
     #init new pdftk wrapper
-    pdftk = PdfForms.new( :path_to_pdftk )
+    pdftk = PdfForms.new( PATH_TO_PDFTK )
     
     #return list of all fields
     pdftk.get_field_names( source_pdf )

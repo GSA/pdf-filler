@@ -39,18 +39,19 @@ Non-Fillable PDFs (e.g., scanned or other PDFs without structured forms) require
 
 For example, to structure an HTML form, you may do so as follows:
 
-```html
-<form method="post" action ="/fill">
-  
-  <!-- A standard, fillable field, simply pass the field name -->
-  <label>First Name: <input type="text" name="first_name" /><label>
-  
-  <!-- A non-fillable field for which we pass coordinates -->
-  <label>Last Name: <input type="text" name="100,100,1" /><label>
-  
-  <input type="submit" value="Submit" />
-  
-</form>
+```html 
+
+    <form method="post" action ="/fill">
+      
+      <!-- A standard, fillable field, simply pass the field name -->
+      <label>First Name: <input type="text" name="first_name" /><label>
+      
+      <!-- A non-fillable field for which we pass coordinates -->
+      <label>Last Name: <input type="text" name="100,100,1" /><label>
+      
+      <input type="submit" value="Submit" />
+      
+    </form>
 ```
 
 Hosting PDF Filler

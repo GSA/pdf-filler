@@ -1,8 +1,19 @@
-<h1>Form for {{ pdf }}</h1>
-<form method="post" action="/fill">
+<h2>Form for</h2>
+<h3>{{ pdf }}</h3>
+
+<form method="post" action="/fill" class="form form-horizontal">
   <input type="hidden" name="pdf" value="{{ pdf }}" />
 {% for field in fields %}
-  <label for="{{ field }}">{{ field }}<input type="text" name="{{field}}" id="{{ field }}" /></label><br />
+  <div class="control-group">
+    <label for="{{ field }}" class="control-label">{{ field }}</label>
+    <div class="controls">
+      <input type="text" name="{{field}}" id="{{ field }}" placeholder="{{field}}" />
+    </div>
+  </div>
 {% endfor %}
-  <input type="submit" value="Submit" />
+  <div class="control-group">
+    <div class="controls">
+      <input type="submit" value="Submit" />
+    </div>
+  </div>
 </form>

@@ -28,17 +28,17 @@ end
 #e.g., /fields.html?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf
 get '/fields.html' do
   pdf = Pdf_Filler.new
-  liquid :fields, :locals => { :pdf => params['pdf'], :fields => pdf.get_fields( params['pdf'] ) }
+  liquid :fields, :locals => { :pdf => params['pdf'], :fields => pdf.get_fields( params['pdf'] ) }, :layout => :bootstrap
 end
 
 #get an HTML representation of the form
 #e.g., /form.html?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf
 get '/form.html' do
   pdf = Pdf_Filler.new
-  liquid :form, :locals => { :pdf => params['pdf'], :fields => pdf.get_fields( params['pdf'] ) }
+  liquid :form, :locals => { :pdf => params['pdf'], :fields => pdf.get_fields( params['pdf'] ) }, :layout => :bootstrap
 end
 
 # documentation
 get '/' do 
-  markdown :index
+  markdown :index, :layout => :bootstrap, :layout_engine => :liquid
 end
