@@ -1,16 +1,33 @@
-PDF Form Filler
-===============
+Form Filler
+===========
 
-RESTful service to fill both fillable and unfillable forms. Abstracts the form-filling logic of [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) and [prawn-fillform](https://github.com/moessimple/prawn-fillform).
+Form Filler is a RESTful service (API) to aid in the completion of existing PDF-based forms and empowers web developers to use browser-based forms and modern web standards to facilitate the collection of information.
+
+Form Filler works with virtually any unencrtyped PDF, suporting both fillable (e.g., PDFs with pre-defined entry fields) and non-fillable (e.g., scanned PDFs) forms. Simply pass it the URL to any publicly hosted PDF. Form Filler can even automatically create the markup necessary to embed an HTML form in an existing webpage.
+
+Featues
+-------
+
+* RESTful service (API) to aid in the completion of PDF-based forms
+* Submit form values via HTTP POST, recieve the completed PDF as a download
+* Works with both fillable and non-fillable (e.g., scanned) PDFs
+* Dynamically generates HTML forms for any fillable PDF
+* Provides developers with field name lookup service to facilitate the rapid development of client applications
+
+Under the Hood
+--------------
+
+The project abstracts the form-filling logic of [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) and [prawn-fillform](https://github.com/moessimple/prawn-fillform).
 
 Usage
 -----
-PDF Filler works by accepting a key => value pair of field names and values. These fields can either be fillable PDF form fields, or can be an arbitrary x/y coordinate of a non-fillable field.
+
+PDF Filler works by accepting a key => value pair of field names and values. These fields can either be fillable PDF form fields, or can be an arbitrary x/y coordinate of a non-fillable field. For fillable PDFs the key should represent the field name. In non-fillable PDFs, the key should represent the field coordinates as described below (e.g., `100,100`). In both insstances, the field value should contain the user input for that given field.
 
 Getting Field Names
 -------------------
 
-Field names can be gotten locally using open-source PDF utility pdftk, or dynamically using the service.
+Field names can be discovered locally using open-source PDF utility pdftk, or dynamically using the service.
 
 **To get a list of all fields within a given PDF**
 
@@ -23,7 +40,7 @@ Field names can be gotten locally using open-source PDF utility pdftk, or dynami
 Filling Out Forms
 -----------------
 
-To fill out a PDF, issue a `POST` request to `/fill`. POST data should be in the format of key => value where key reprents the field name and value represents the field value. Be sure to pass a key of "pdf" with the URL of the PDF to fill. The service will return the filled in PDF.
+To fill out a PDF, issue a `POST` request to `/fill`. POST data should be in the format of key => value where key reprents the field name and value represents the field value. Be sure to pass a key of "pdf" with the URL of the PDF to fill. The service will return the filled in PDF as a download.
 
 Generating HTML Forms
 ---------------------
@@ -37,7 +54,10 @@ Non-Fillable PDFs
 
 Non-Fillable PDFs (e.g., scanned or other PDFs without structured forms) require passing X, Y coordinates, and (optionally) a page number. This data is passed using the following naming convention for the field: `x,y,page` (or simply `x,y`) where X and Y represent the pointer coordinates from the bottom left hand corner of the document. If no page is given, the first page will be assumed.
 
-For example, to structure an HTML form, you may do so as follows:
+Structuring the HTML Form
+-------------------------
+
+Data can be submitted programatically (e.g. via an API) or as a standard web-based form. For example, to structure an HTML form, you may do so as follows:
 
 ```html 
 
@@ -72,5 +92,19 @@ The app is designed to be hosted on hosting services like heroku. If using Herok
 Examples
 --------
 
-* [Fields](/fields?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
-* [Form](/form?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+* [Fields](http://pdf-filler.heroku.com/fields?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+* [Form](http://pdf-filler.heroku.com/form?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+
+Contributing
+------------
+
+## Contributing
+
+Anyone is encouraged to contribute to the project by [forking](https://help.github.com/articles/fork-a-repo) and submitting a pull request. (If you are new to GitHub, you might start with a [basic tutorial](https://help.github.com/articles/set-up-git).) 
+
+By contributing to this project, you grant a world-wide, royalty-free, perpetual, irrevocable, non-exclusive, transferable license to all users under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License.
+
+License
+-------
+
+This project constitutes a United States Government Work under 17 USC ¤ 105 and is distributed under the terms of the [MIT License](http://opensource.org/licenses/mit-license.php).
