@@ -5,6 +5,9 @@ require 'prawn-fillform'
 require 'json'
 
 class PdfFiller
+
+  #path to the pdftk binary
+  #http://www.pdflabs.com/docs/install-pdftk/
   PATH_TO_PDFTK = ENV['PATH_TO_PDFTK'] || '/usr/local/bin/pdftk'
 
   # regular expression to determine if fillable or non-fillable field
@@ -18,10 +21,15 @@ class PdfFiller
   # Given a PDF an array of fields -> values
   # return a PDF with the given fields filled out
   def fill( url, data )
+    
     source_pdf = open(url)
     step_1_result = Tempfile.new( ['pdf', '.pdf'] )
     filled_pdf = Tempfile.new( ['pdf', '.pdf'] )
+    
+    #Fill fillable fields (step 1)
     @pdftk.fill_form source_pdf.path, step_1_result.path, data.find_all{ |key, value| !key[KEY_REGEX] }
+    
+    #Fill non-fillable fields (returning filled pdf)
     Prawn::Document.generate filled_pdf.path, :template => step_1_result.path do |pdf|
       pdf.font("Helvetica", :size=> 10)
       fields = data.find_all { |key, value| key[KEY_REGEX] }
