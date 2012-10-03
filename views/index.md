@@ -48,7 +48,7 @@ For example, to structure an HTML form, you may do so as follows:
   <!-- A non-fillable field for which we pass coordinates -->
   <label>Last Name: <input type="text" name="100,100,1" /><label>
   
-  <input type="submit value="Submit" />
+  <input type="submit" value="Submit" />
   
 </form>
 ```
