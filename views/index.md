@@ -52,6 +52,7 @@ For example, to structure an HTML form, you may do so as follows:
       <input type="submit" value="Submit" />
       
     </form>
+    
 ```
 
 Hosting PDF Filler
@@ -62,3 +63,9 @@ You can freely use PDF Filler as a web service. But if you'd like to grab the so
 PDF Filler uses pdftk to handle the action form filling. pdftk can be [freely downloaded and installed](http://www.pdflabs.com/docs/install-pdftk/) on most systems. If installed at a location other than ``, be sure to update the configuration.
 
 PDF Filler is written in Ruby and uses [Sinatra](http://www.sinatrarb.com/) to generate a RESTful API
+
+Examples
+--------
+
+* [Fields)(/fields.html?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+* [Form)(/form.html?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
