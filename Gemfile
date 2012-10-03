@@ -1,10 +1,18 @@
 source :rubygems
+
+gem 'rake'
 gem 'sinatra'
 gem 'thin'
-gem 'sinatra'
 gem 'liquid'
 gem 'pdf-forms'
 gem 'prawn'
 gem 'prawn-fillform'
 gem 'json'
 gem 'markdown'
+
+group :test do
+  gem 'rspec'
+  gem 'rack-test'
+  gem 'webrat'
+  gem 'simplecov', :require => false
+end

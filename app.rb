@@ -5,9 +5,9 @@ require 'thin'
 require 'open-uri'
 require 'markdown'
 require 'liquid'
-require './pdf-filler.rb'
+require File.dirname(__FILE__) + "/lib/pdf-filler.rb"
 
-set :public_folder, File.dirname(__FILE__) + '/static'
+set :public_folder, File.dirname(__FILE__) + '/public'
 set :root, File.dirname(__FILE__)
 set :views, File.dirname(__FILE__) + "/views"
 

@@ -1,10 +1,9 @@
 class Pdf_Filler
-  
   require 'open-uri'
   require 'pdf_forms'
   require 'prawn'
   require 'prawn-fillform'
-  require 'json'
+  require 'json'  
   
   #path to the pdftk binary
   #if you don't have it, you can get it here:
@@ -22,7 +21,6 @@ class Pdf_Filler
     
     #return temporary file
     file
-    
   end
 
   #given a PDF an array of fields -> values
@@ -77,7 +75,6 @@ class Pdf_Filler
 
     #return resulting PDF  
     filled_pdf
-    
   end
   
   #return a hash of all fields in a given PDF
@@ -91,7 +88,5 @@ class Pdf_Filler
     
     #return list of all fields
     pdftk.get_field_names( source_pdf )
-
-  end
-  
+  end 
 end
