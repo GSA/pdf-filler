@@ -1,7 +1,7 @@
 <h2>Fields in</h2>
-<h3>{{ pdf }}</h2>
+<h3>{{ pdf | strip_html }}</h2>
 <ul>
 {% for field in fields %}
-  <li>{{ field }}</li>
+  <li>{{ field | strip_html }}</li>
 {% endfor %}
 </ul>

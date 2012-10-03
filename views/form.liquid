@@ -1,13 +1,13 @@
 <h2>Form for</h2>
-<h3>{{ pdf }}</h3>
+<h3>{{ pdf | strip_html }}</h3>
 
 <form method="post" action="/fill" class="form form-horizontal">
   <input type="hidden" name="pdf" value="{{ pdf }}" />
 {% for field in fields %}
   <div class="control-group">
-    <label for="{{ field }}" class="control-label">{{ field }}</label>
+    <label for="{{ field | escape }}" class="control-label">{{ field | strip_html }}</label>
     <div class="controls">
-      <input type="text" name="{{field}}" id="{{ field }}" placeholder="{{field}}" />
+      <input type="text" name="{{ field | escape }}" id="{{ field | escape }}" placeholder="{{ field | escape }}" />
     </div>
   </div>
 {% endfor %}
