@@ -26,7 +26,7 @@ class Pdf_Filler
   #given a PDF an array of fields -> values
   # return a PDF with the given fields filled out
   def fill( url, data )
-  
+  puts data.inspect
     #regular expression to determine if fillable or non-fillable field
     #validates 1,2 and 1,2,3
     key_regex = /^(?<x>[0-9]+),(?<y>[0-9]+)(,(?<page>[0-9]+))?$/
