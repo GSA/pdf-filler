@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe 'Pdf_Filler' do
+describe 'PdfFiller' do
 
   TEST_PDF = 'http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf'
   TEST_DATA = [ "Name_Last" => "_MYGOV_FILLABLE_", "100,100,1" => "_MYGOV_NON_FILLABLE_" ]
-  
+
   def app
     Sinatra::Application
   end
@@ -24,14 +24,6 @@ describe 'Pdf_Filler' do
   end
   
   describe "POST /fill" do
-    
-    it "shold download the PDF locally" do
-      
-      pdf_filler = Pdf_Filler.new
-      file = pdf_filler.download_pdf_to_temp_file( TEST_PDF )
-      File.exists?( file.path ).should be_true()
-      
-    end
     
     it "should return the PDF" do 
       post "/fill?pdf=" + TEST_PDF
