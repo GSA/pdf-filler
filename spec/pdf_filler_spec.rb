@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe 'Pdf_Filler' do
-
+describe 'PdfFiller' do
   def app
     Sinatra::Application
   end
@@ -17,5 +16,5 @@ describe 'Pdf_Filler' do
       last_response.should =~ /PDF Form Filler/
       last_response.should =~ /RESTful service to fill both fillable and unfillable forms/
     end
-  end
+  end  
 end
