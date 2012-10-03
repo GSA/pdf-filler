@@ -9,7 +9,7 @@ class Pdf_Filler
   #path to the pdftk binary
   #if you don't have it, you can get it here:
   #http://www.pdflabs.com/docs/install-pdftk/
-  PATH_TO_PDFTK = '/usr/local/bin/pdftk'
+  PATH_TO_PDFTK = '/usr/bin/pdftk'
   
   #Grab remote PDF file and save to temporary location
   def download_pdf_to_temp_file( url )
