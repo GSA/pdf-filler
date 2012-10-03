@@ -39,7 +39,7 @@ Non-Fillable PDFs (e.g., scanned or other PDFs without structured forms) require
 
 For example, to structure an HTML form, you may do so as follows:
 
-```
+```html
 <form method="post" action ="/fill">
   
   <!-- A standard, fillable field, simply pass the field name -->
