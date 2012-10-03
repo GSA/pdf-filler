@@ -1,7 +1,7 @@
 PDF Form Filler
 ===============
 
-RESTful service to fill both fillable and unfillable forms
+RESTful service to fill both fillable and unfillable forms. Abstracts the form-filling logic of [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) and [prawn-fillform](https://github.com/moessimple/prawn-fillform).
 
 Usage
 -----
@@ -10,7 +10,7 @@ PDF Filler works by accepting a key => value pair of field names and values. The
 Getting Field Names
 -------------------
 
-Field names can be gotten locally using open-source PDF utility pdftk, or dynamically using this service.
+Field names can be gotten locally using open-source PDF utility pdftk, or dynamically using the service.
 
 **To get a list of all fields within a given PDF**
 
@@ -35,12 +35,27 @@ Generating HTML Forms
 Non-Fillable PDFs
 -----------------
 
-Non-Fillable PDFs (e.g., scanned or other PDFs without structured forms) require passing X, Y coordinates, and a page number along with the form data. Each field should be an array consisting of:
-
-* `page` - the page # of the field
-* `x` - the X value of the position of the field
-* `y` - the Y value of the position of the field
-* `value` the field value
+Non-Fillable PDFs (e.g., scanned or other PDFs without structured forms) require passing X, Y coordinates, and (optionally) a page number. This data is passed using the following naming convention for the field: `x,y,page` (or simply `x,y`) where X and Y represent the pointer coordinates from the bottom left hand corner of the document. If no page is given, the first page will be assumed.
 
 For example, to structure an HTML form, you may do so as follows:
 
+```
+<form method="post" action ="/fill">
+  
+  <!-- A standard, fillable field, simply pass the field name -->
+  <label>First Name: <input type="text" name="first_name" /><label>
+  
+  <!-- A non-fillable field for which we pass coordinates -->
+  <label>Last Name: <input type="text" name="100,100,1" /><label>
+  
+  <input type="submit value="Submit" />
+  
+</form>
+```
+
+Installation and Requirements
+-----------------------------
+
+PDF Filler uses pdftk to handle the action form filling. pdftk can be [freely downloaded and installed](http://www.pdflabs.com/docs/install-pdftk/) on most systems. If installed at a location other than ``, be sure to update the configuration.
+
+PDF Filler is written in Ruby and uses [Sinatra](http://www.sinatrarb.com/) to generate a RESTful API

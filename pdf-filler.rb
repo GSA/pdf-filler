@@ -75,6 +75,7 @@ class Pdf_Filler
     
   end
   
+  #return a hash of all fields in a given PDF
   def get_fields( url ) 
   
     #grab external PDF and store locally
