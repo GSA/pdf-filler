@@ -26,7 +26,7 @@ describe 'PdfFiller' do
   describe "POST /fill" do
     
     it "should return the PDF" do 
-      post "/fill?pdf=" + TEST_PDF
+      post "/fill", :pdf => TEST_PDF
       last_response.should be_ok
       last_response.headers['Content-Type'].should eq( 'application/pdf' )
 
