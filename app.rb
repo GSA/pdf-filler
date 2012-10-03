@@ -18,7 +18,7 @@ end
 # return a filled PDF as a result of post data
 post '/fill' do
   pdf = PdfFiller.new
-  send_file pdf.fill( params['pdf'], params ).path
+  send_file pdf.fill( params['pdf'], params ).path, :type => "application/pdf", :filename => File.basename( params['pdf'] ), :disposition => :inline
 end
 
 # get an HTML listing of all the fields

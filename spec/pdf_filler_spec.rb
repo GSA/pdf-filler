@@ -28,7 +28,6 @@ describe 'PdfFiller' do
       post "/fill", :pdf => TEST_PDF
       last_response.should be_ok
       last_response.headers['Content-Type'].should eq( 'application/pdf' )
-
     end
     
     it "should fill fields" do

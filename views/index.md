@@ -14,7 +14,7 @@ Field names can be gotten locally using open-source PDF utility pdftk, or dynami
 
 **To get a list of all fields within a given PDF**
 
-`/fields.html?pdf={URL to the PDF}`
+`/fields?pdf={URL to the PDF}`
 
 **To get a JSON representation of all fields within a given PDF**
 
@@ -30,7 +30,7 @@ Generating HTML Forms
 
 **To get a generic HTML representation of any fillable PDF form**
 
-`/form.html?pdf={URL To PDF}`
+`/form?pdf={URL To PDF}`
 
 Non-Fillable PDFs
 -----------------
@@ -72,5 +72,5 @@ The app is designed to be hosted on hosting services like heroku. If using Herok
 Examples
 --------
 
-* [Fields](/fields.html?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
-* [Form](/form.html?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+* [Fields](/fields?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+* [Form](/form?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
