@@ -98,8 +98,6 @@ Examples
 Contributing
 ------------
 
-## Contributing
-
 Anyone is encouraged to contribute to the project by [forking](https://help.github.com/articles/fork-a-repo) and submitting a pull request. (If you are new to GitHub, you might start with a [basic tutorial](https://help.github.com/articles/set-up-git).) 
 
 By contributing to this project, you grant a world-wide, royalty-free, perpetual, irrevocable, non-exclusive, transferable license to all users under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License.
