@@ -21,18 +21,18 @@ post '/fill' do
   send_file pdf.fill( params['pdf'], params ).path
 end
 
-# return JSON list of field names
-# e.g., /fields.json?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf
-get '/fields.json' do
-  pdf = PdfFiller.new
-  pdf.get_fields( params['pdf'] ).to_json
-end
-
 # get an HTML listing of all the fields
 # e.g., /fields.html?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf
 get '/fields' do
   pdf = PdfFiller.new
   liquid :fields, :locals => { :pdf => params['pdf'], :fields => pdf.get_fields( params['pdf'] ) }, :layout => :bootstrap
+end
+
+# return JSON list of field names
+# e.g., /fields.json?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf
+get '/fields.json' do
+  pdf = PdfFiller.new
+  pdf.get_fields( params['pdf'] ).to_json
 end
 
 # get an HTML representation of the form
