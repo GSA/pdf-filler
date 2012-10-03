@@ -67,6 +67,11 @@ describe 'PdfFiller' do
   end
   
   describe "GET /form" do
+    it "should create a form for the pdf base don fields" do
+      get "/form", :pdf => './spec/sample.pdf'
+      last_response.should be_ok
+      last_response.body.should =~ /PHD/
+      last_response.body.should =~ /Emergency_Contact/
+    end
   end
-
 end
