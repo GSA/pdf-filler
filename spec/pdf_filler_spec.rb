@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'PdfFiller' do
 
   TEST_PDF = 'http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf'
-  TEST_DATA = [ "Name_Last" => "_MYGOV_FILLABLE_", "100,100,1" => "_MYGOV_NON_FILLABLE_" ]
 
   def app
     Sinatra::Application
@@ -34,19 +33,20 @@ describe 'PdfFiller' do
     
     it "should fill fields" do
       
-      post "/fill?pdf=" + TEST_PDF, :data => TEST_DATA
+      post "/fill", :pdf => TEST_PDF, :Name_Last => "_MYGOV_FILLABLE_", :"100,100,1" => "_MYGOV_NON_FILLABLE_"
       
-      file = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
-      file << last_response.body
+      compressed = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
+      uncompressed = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
+      compressed << last_response.body
       
       pdftk = PdfForms.new( '/usr/local/bin/pdftk' )
-      pdftk.call_pdftk file.path, 'output', file.path, 'uncompress'
+      pdftk.call_pdftk compressed.path, 'output', uncompressed.path, 'uncompress'
        
-      file = File.open( file, 'rb' )
+      file = File.open( uncompressed.path, 'rb' )
       contents = file.read
-      #contents.should =~ /_MYGOV_FILLABLE_/
-      #contents.should =~ /_MYGOV_NON_FILLABLE_/
-
+      contents.include?('_MYGOV_FILLABLE_').should be_true
+      #contents.include?('_MYGOV_NON_FILLABLE_').should be_true
+      
     end
   
   end  

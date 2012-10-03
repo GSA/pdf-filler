@@ -21,7 +21,7 @@ class PdfFiller
   # Given a PDF an array of fields -> values
   # return a PDF with the given fields filled out
   def fill( url, data )
-  
+    
     source_pdf = open(url)
     step_1_result = Tempfile.new( ['pdf', '.pdf'] )
     filled_pdf = Tempfile.new( ['pdf', '.pdf'] )
