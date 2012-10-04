@@ -105,4 +105,4 @@ By contributing to this project, you grant a world-wide, royalty-free, perpetual
 License
 -------
 
-This project constitutes a United States Government Work under 17 USC ¤ 105 and is distributed under the terms of the [MIT License](http://opensource.org/licenses/mit-license.php).
+This project constitutes a United States Government Work under 17 USC 105 and is distributed under the terms of the [MIT License](http://opensource.org/licenses/mit-license.php).
