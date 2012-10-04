@@ -3,13 +3,13 @@ Form Filler
 
 Form Filler is a RESTful service (API) to aid in the completion of existing PDF-based forms and empowers web developers to use browser-based forms and modern web standards to facilitate the collection of information.
 
-Form Filler works with virtually any unencrtyped PDF, suporting both fillable (e.g., PDFs with pre-defined entry fields) and non-fillable (e.g., scanned PDFs) forms. Simply pass it the URL to any publicly hosted PDF. Form Filler can even automatically create the markup necessary to embed an HTML form in an existing webpage.
+Form Filler works with virtually any unencrypted PDF, supporting both fillable (e.g., PDFs with pre-defined entry fields) and non-fillable (e.g., scanned PDFs) forms. Simply pass it the URL to any publicly hosted PDF. Form Filler can even automatically create the markup necessary to embed an HTML form in an existing webpage.
 
-Featues
+Features
 -------
 
 * RESTful service (API) to aid in the completion of PDF-based forms
-* Submit form values via HTTP POST, recieve the completed PDF as a download
+* Submit form values via HTTP POST, receive the completed PDF as a download
 * Works with both fillable and non-fillable (e.g., scanned) PDFs
 * Dynamically generates HTML forms for any fillable PDF
 * Provides developers with field name lookup service to facilitate the rapid development of client applications
@@ -57,7 +57,7 @@ Non-Fillable PDFs (e.g., scanned or other PDFs without structured forms) require
 Structuring the HTML Form
 -------------------------
 
-Data can be submitted programatically (e.g. via an API) or as a standard web-based form. For example, to structure an HTML form, you may do so as follows:
+Data can be submitted programmatically (e.g. via an API) or as a standard web-based form. For example, to structure an HTML form, you may do so as follows:
 
 ```html 
 
