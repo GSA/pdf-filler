@@ -84,6 +84,11 @@ PDF Filler uses pdftk to handle the action form filling. pdftk can be [freely do
 
 PDF Filler is written in Ruby and uses [Sinatra](http://www.sinatrarb.com/) to generate a RESTful API
 
+Deploying
+-------
+
+PDF Filler is simple to deploy as a backend service on your server.  Follow the instructions here: http://www.kalzumeus.com/2010/01/15/deploying-sinatra-on-ubuntu-in-which-i-employ-a-secretary/ as an example of how to deploy and set up the app as a backend service on your machine.  There is a file called daemon.rb that is part of the app for this purpose.
+
 Hosting 
 ------
 
