@@ -6,7 +6,6 @@ gem 'thin'
 gem 'liquid'
 gem 'pdf-forms'
 gem 'prawn'
-gem 'prawn-fillform'
 gem 'json'
 gem 'markdown'
 

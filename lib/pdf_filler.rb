@@ -1,7 +1,6 @@
 require 'open-uri'
 require 'pdf_forms'
 require 'prawn'
-require 'prawn-fillform'
 require 'json'
 
 class PdfFiller
