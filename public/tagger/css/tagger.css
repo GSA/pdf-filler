@@ -1,0 +1,6 @@
+#tagger { position: absolute; width: 250px; background: white; border: 1px solid #ccc; border-radius: 15px; padding: 10px; }
+#tagger .formRow { clear: both; float: left; margin: 2px 0 2px 0 }
+#tagger .formField, #tagger .formLabel { float: left; width: 100px; }
+#tagger #addTag { clear: both; float: left; margin-top: 10px; }
+#tagger label { font-weight: bold; }
+#tagSubmit { color: red; width: 60px; padding-bottom: 4px; font-weight: bold; }
