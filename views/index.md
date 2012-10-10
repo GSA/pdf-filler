@@ -17,7 +17,7 @@ Features
 Under the Hood
 --------------
 
-The project abstracts the form-filling logic of [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) and [prawn-fillform](https://github.com/moessimple/prawn-fillform).
+The project abstracts the form-filling logic of [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) and [prawn](https://github.com/prawnpdf/prawn).
 
 Usage
 -----
