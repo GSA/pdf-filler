@@ -2,6 +2,12 @@
 <h3>{{ pdf | strip_html }}</h2>
 <ul>
 {% for field in fields %}
-  <li>{{ field | strip_html }}</li>
+    <table border="1" style="width: 500px;" >
+        {% for property in field %}
+        <tr>
+            <th width="150px;">{{ property[0] | strip_html }}</th>
+            <td>{{ property[1] | strip_html }}</td>
+        </tr>
+        {% endfor %}
+    </table><br />
 {% endfor %}
-</ul>

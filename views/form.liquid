@@ -4,10 +4,11 @@
 <form method="post" action="/fill" class="form form-horizontal">
   <input type="hidden" name="pdf" value="{{ pdf }}" />
 {% for field in fields %}
+  {% assign label = field.FieldNameAlt || field.FieldName %}
   <div class="control-group">
-    <label for="{{ field | escape }}" class="control-label">{{ field | strip_html }}</label>
+    <label for="{{ field.FieldName | escape }}" class="control-label">{{ label | strip_html }}</label>
     <div class="controls">
-      <input type="text" name="{{ field | escape }}" id="{{ field | escape }}" placeholder="{{ field | escape }}" />
+      <input type="text" name="{{ field.FieldName | escape }}" id="{{ field.FieldName | escape }}" />
     </div>
   </div>
 {% endfor %}

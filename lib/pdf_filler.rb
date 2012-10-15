@@ -2,6 +2,7 @@ require 'open-uri'
 require 'pdf_forms'
 require 'prawn'
 require 'json'
+require 'uri'
 
 class PdfFiller
 
@@ -21,7 +22,7 @@ class PdfFiller
   # return a PDF with the given fields filled out
   def fill( url, data )
     
-    source_pdf = open(url)
+    source_pdf = open( URI.escape( url ) )
     step_1_result = Tempfile.new( ['pdf', '.pdf'] )
     filled_pdf = Tempfile.new( ['pdf', '.pdf'] )
     
@@ -43,6 +44,21 @@ class PdfFiller
   
   # Return a hash of all fields in a given PDF
   def get_fields(url)
-    @pdftk.get_field_names(open(url).path)
+    #note: we're talking to PDFTK directly here
+    # the native @pdftk.get_field_names doesn't seem to work on many government PDFs
+    fields = @pdftk.call_pdftk( open( URI.escape( url ) ).path, 'dump_data_fields' )
+    fields = fields.split("---")
+    @output = []
+    fields.each do |field|
+       @hash = {}
+        field.split("\n").each() do |line|
+            next if line == ""
+            key, value = line.split(": ")
+            @hash[key] = value
+        end
+        next if @hash.empty?
+        @output.push @hash
+    end
+    @output
   end
 end
