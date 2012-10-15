@@ -23,8 +23,6 @@ GEM
     prawn (0.12.0)
       pdf-reader (>= 0.9.0)
       ttfunk (~> 1.0.2)
-    prawn-fillform (0.0.14)
-      prawn
     props (1.0.0)
     rack (1.4.1)
     rack-protection (1.2.0)
@@ -70,7 +68,6 @@ DEPENDENCIES
   markdown
   pdf-forms
   prawn
-  prawn-fillform
   rack-test
   rake
   rspec

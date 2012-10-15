@@ -17,7 +17,7 @@ Features
 Under the Hood
 --------------
 
-The project abstracts the form-filling logic of [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) and [prawn-fillform](https://github.com/moessimple/prawn-fillform).
+The project abstracts the form-filling logic of [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) and [prawn](https://github.com/prawnpdf/prawn).
 
 Usage
 -----
@@ -83,6 +83,11 @@ You can freely use PDF Filler as a web service. But if you'd like to grab the so
 PDF Filler uses pdftk to handle the action form filling. pdftk can be [freely downloaded and installed](http://www.pdflabs.com/docs/install-pdftk/) on most systems. If installed at a location other than ``, be sure to update the configuration.
 
 PDF Filler is written in Ruby and uses [Sinatra](http://www.sinatrarb.com/) to generate a RESTful API
+
+Deploying
+-------
+
+PDF Filler is simple to deploy as a backend service on your server.  Follow the instructions here: http://www.kalzumeus.com/2010/01/15/deploying-sinatra-on-ubuntu-in-which-i-employ-a-secretary/ as an example of how to deploy and set up the app as a backend service on your machine.  There is a file called daemon.rb that is part of the app for this purpose.
 
 Hosting 
 ------
