@@ -40,7 +40,9 @@ Field names can be discovered locally using open-source PDF utility pdftk, or dy
 Filling Out Forms
 -----------------
 
-To fill out a PDF, issue a `POST` request to `/fill`. POST data should be in the format of key => value where key reprents the field name and value represents the field value. Be sure to pass a key of "pdf" with the URL of the PDF to fill. The service will return the filled in PDF as a download.
+To fill out a PDF, issue a `POST` request to `/fill`. POST data should be in the format of key => value where key represents the field name and value represents the field value. Be sure to pass a key of "pdf" with the URL of the PDF to fill. The service will return the filled in PDF as a download.
+
+*Note: Due to the way HTML handles forms, certain special characters such as square brackets will not properly POST to the service. If the PDF field contains reserved characters, simply [urlencode](http://en.wikipedia.org/wiki/Percent-encoding) the field name prior to POSTing.*
 
 Generating HTML Forms
 ---------------------
@@ -78,7 +80,7 @@ Data can be submitted programmatically (e.g. via an API) or as a standard web-ba
 Running
 -------
 
-You can freely use PDF Filler as a web service. But if you'd like to grab the source code and host it locally, it's actually pretty easy.`
+You can freely use PDF Filler as a web service. But if you'd like to grab the source code and host it locally, it's actually pretty easy.
 
 PDF Filler uses pdftk to handle the action form filling. pdftk can be [freely downloaded and installed](http://www.pdflabs.com/docs/install-pdftk/) on most systems. If installed at a location other than ``, be sure to update the configuration.
 

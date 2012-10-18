@@ -14,6 +14,14 @@ class PdfFiller
   # validates 1,2 and 1,2,3
   KEY_REGEX = /^(?<x>[0-9]+),(?<y>[0-9]+)(,(?<page>[0-9]+))?$/
 
+  def urldecode_keys hash
+    output = Hash.new
+    hash.each do |key, value|
+      output[ URI.unescape( key ) ] = value
+    end
+    output
+  end
+
   def initialize
     @pdftk = PdfForms.new(PATH_TO_PDFTK)
   end
@@ -25,6 +33,9 @@ class PdfFiller
     source_pdf = open( URI.escape( url ) )
     step_1_result = Tempfile.new( ['pdf', '.pdf'] )
     filled_pdf = Tempfile.new( ['pdf', '.pdf'] )
+    
+    data = urldecode_keys data
+    puts data.inspect
     
     #Fill fillable fields (step 1)
     @pdftk.fill_form source_pdf.path, step_1_result.path, data.find_all{ |key, value| !key[KEY_REGEX] }

@@ -1,5 +1,6 @@
 <h2>Form for</h2>
 <h3>{{ pdf | strip_html }}</h3>
+<div id="fields"></div>
 
 <form method="post" action="/fill" class="form form-horizontal">
   <input type="hidden" name="pdf" value="{{ pdf }}" />
@@ -8,7 +9,7 @@
   <div class="control-group">
     <label for="{{ field.FieldName | escape }}" class="control-label">{{ label | strip_html }}</label>
     <div class="controls">
-      <input type="text" name="{{ field.FieldName | escape }}" id="{{ field.FieldName | escape }}" />
+      <input type="text" name="{{ field.FieldName | replace:"[","%5B" | replace:"]","%5D" }}" id="{{ field.FieldName | escape }}" />
     </div>
   </div>
 {% endfor %}
@@ -18,3 +19,12 @@
     </div>
   </div>
 </form>
+
+<script type="text/template" id="text_field">
+    <div class="control-group">
+    <label for="<% FieldName %>" class="control-label"><% FieldNameAlt %></label>
+    <div class="controls">
+      <input type="text" name="<% FieldName %>" id="<% FieldName %>" />
+    </div>
+  </div>
+</script>
