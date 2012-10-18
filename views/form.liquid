@@ -9,7 +9,7 @@
   <div class="control-group">
     <label for="{{ field.FieldName | escape }}" class="control-label">{{ label | strip_html }}</label>
     <div class="controls">
-      <input type="text" name="{{ field.FieldName | replace:"[","%5B" | replace:"]","%5D" }}" id="{{ field.FieldName | escape }}" />
+      <input type="text" name="{{ field.FieldName | replace:"[","%5B" | replace:"]","%5D" | escape }}" id="{{ field.FieldName | escape }}" />
     </div>
   </div>
 {% endfor %}
