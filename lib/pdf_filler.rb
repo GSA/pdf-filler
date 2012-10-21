@@ -29,14 +29,11 @@ class PdfFiller
   # Given a PDF an array of fields -> values
   # return a PDF with the given fields filled out
   def fill( url, data )
-    
     source_pdf = open( URI.escape( url ) )
     step_1_result = Tempfile.new( ['pdf', '.pdf'] )
     filled_pdf = Tempfile.new( ['pdf', '.pdf'] )
     
     data = urldecode_keys data
-    puts data.inspect
-    
     #Fill fillable fields (step 1)
     @pdftk.fill_form source_pdf.path, step_1_result.path, data.find_all{ |key, value| !key[KEY_REGEX] }
     
@@ -61,14 +58,14 @@ class PdfFiller
     fields = fields.split("---")
     @output = []
     fields.each do |field|
-       @hash = {}
-        field.split("\n").each() do |line|
-            next if line == ""
-            key, value = line.split(": ")
-            @hash[key] = value
-        end
-        next if @hash.empty?
-        @output.push @hash
+      @hash = {}
+      field.split("\n").each() do |line|
+          next if line == ""
+          key, value = line.split(": ")
+          @hash[key] = value
+      end
+      next if @hash.empty?
+      @output.push @hash
     end
     @output
   end
