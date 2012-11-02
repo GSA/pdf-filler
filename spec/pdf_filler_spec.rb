@@ -45,7 +45,7 @@ describe 'PdfFiller' do
     
     context "when the PDF file has weird field names" do
       it "should still fill the fields properly" do
-        post "/fill", :pdf => "./spec/ss-5.pdf", "topmostSubform[0].Page5[0].firstname[0]".to_sym => "_MYGOV_FILLABLE_"
+        post "/fill", :pdf => "./spec/ss-5.pdf", "topmostSubform%5B0%5D.Page5%5B0%5D.firstname%5B0%5D" => "_MYGOV_FILLABLE_"
         compressed = Tempfile.new(['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT')
         uncompressed = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
         compressed << last_response.body
