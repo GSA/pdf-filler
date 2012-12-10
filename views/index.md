@@ -77,12 +77,30 @@ Data can be submitted programmatically (e.g. via an API) or as a standard web-ba
     
 ```
 
+Requirements
+------------
+
+* Latest stable version of Ruby (+ the Bundler gem)
+* PDFtk
+
+Setting up
+----------
+
+1. Install the latest version of Ruby if not already installed (`$ \curl -L https://get.rvm.io | bash -s stable --ruby`)
+2. Install [PDFtk](http://www.pdflabs.com/docs/install-pdftk/)
+3. Install bundler if not already installed (`gem install bundler`)
+4. Install git if not already installed (or simply download the repository and unzip in the following step)
+5. Clone the git repository (`git clone git@github.com:GSA-OCSIT/pdf-filler.git` and `cd` into the target directory (most likely `pdf-filler`)
+6. `bundle install`
+
 Running
 -------
 
+To run, simply run the command `ruby app.rb` from the project's directory. The service will be exposed on port `4567` by default.
+
 You can freely use PDF Filler as a web service. But if you'd like to grab the source code and host it locally, it's actually pretty easy.
 
-PDF Filler uses pdftk to handle the action form filling. pdftk can be [freely downloaded and installed](http://www.pdflabs.com/docs/install-pdftk/) on most systems. If installed at a location other than ``, be sure to update the configuration.
+PDF Filler uses pdftk to handle the action form filling. pdftk can be [freely downloaded and installed](http://www.pdflabs.com/docs/install-pdftk/) on most systems. If installed at a location other than `/usr/local/bin/pdftk`, be sure to update the configuration by setting the environmental variable `PATH_TO_PDFTK` to the proper path.
 
 PDF Filler is written in Ruby and uses [Sinatra](http://www.sinatrarb.com/) to generate a RESTful API
 
