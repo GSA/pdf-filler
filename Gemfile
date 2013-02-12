@@ -6,7 +6,7 @@ gem 'thin'
 gem 'liquid'
 gem 'pdf-forms'
 gem 'prawn'
-gem 'json'
+gem 'json', "1.7.7"
 gem 'markdown'
 
 group :test do
