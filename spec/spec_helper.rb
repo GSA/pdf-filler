@@ -1,5 +1,5 @@
 ENV['RACK_ENV'] = "test"
-require "SimpleCov"
+require "simplecov"
 SimpleCov.start
 require 'webrat'
 require 'rack/test'
