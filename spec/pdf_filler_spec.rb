@@ -34,7 +34,7 @@ describe 'PdfFiller' do
       uncompressed = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
       compressed << last_response.body
       
-      pdftk = PdfForms.new( '/usr/local/bin/pdftk' )
+      pdftk = PdfForms.new(PATH_TO_PDFTK)
       pdftk.call_pdftk compressed.path, 'output', uncompressed.path, 'uncompress'
        
       file = File.open( uncompressed.path, 'rb' )
@@ -49,7 +49,7 @@ describe 'PdfFiller' do
         compressed = Tempfile.new(['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT')
         uncompressed = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
         compressed << last_response.body
-        pdftk = PdfForms.new('/usr/local/bin/pdftk')
+        pdftk = PdfForms.new(PATH_TO_PDFTK)
         pdftk.call_pdftk compressed.path, 'output', uncompressed.path, 'uncompress'
         file = File.open( uncompressed.path, 'rb' )
         contents = file.read

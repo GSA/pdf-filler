@@ -4,11 +4,12 @@ require 'prawn'
 require 'json'
 require 'uri'
 
+PATH_TO_PDFTK = ENV['PATH_TO_PDFTK'] || (File.exist?('/usr/local/bin/pdftk') ? '/usr/local/bin/pdftk' : '/usr/bin/pdftk')
+
 class PdfFiller
 
   #path to the pdftk binary
   #http://www.pdflabs.com/docs/install-pdftk/
-  PATH_TO_PDFTK = ENV['PATH_TO_PDFTK'] || '/usr/local/bin/pdftk'
 
   # regular expression to determine if fillable or non-fillable field
   # validates 1,2 and 1,2,3
