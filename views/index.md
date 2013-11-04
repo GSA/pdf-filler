@@ -117,8 +117,8 @@ The app is designed to be hosted on hosting services like heroku. If using Herok
 Examples
 --------
 
-* [Fields](http://pdf-filler.heroku.com/fields?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
-* [Form](http://pdf-filler.heroku.com/form?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+* [Fields](http://labs.data.gov/pdf-filler/fields?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+* [Form](http://labs.data.gov/pdf-filler/form?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
 
 Contributing
 ------------
