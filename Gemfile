@@ -5,12 +5,13 @@ gem 'sinatra'
 gem 'thin'
 gem 'liquid'
 gem 'pdf-forms'
-gem 'prawn'
+gem 'prawn', '1.0.0.rc2' # Do not bump!  This is the last version that supports templates - we need them
 gem 'json'
 gem 'markdown'
+gem 'shotgun'
 
 group :development, :test do
-  gem 'pry'
+  gem 'byebug'
 end
 
 group :test do
