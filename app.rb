@@ -68,14 +68,11 @@ def authorized!
 end
 
 def authorized? token
-  ENV['AUTHORIZATION_TOKEN'] = 'abc'
-  ENV['AWS_ACCESS_KEY_ID'] = 'AKIAIERGCPBMD2PHIR4Q'
-  ENV['AWS_SECRET_ACCESS_KEY'] = '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'
-
   if ENV['AUTHORIZATION_TOKEN'] == token
     {
       aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+      aws_s3_bucket: ENV['AWS_S3_BUCKET']
     }
   end
 end

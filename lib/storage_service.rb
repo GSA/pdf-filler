@@ -1,13 +1,15 @@
 require 'aws-sdk'
 
 class StorageService
-  def initialize credentials
-    @aws_access_key_id     = credentials[:aws_access_key_id]
-    @aws_secret_access_key = credentials[:aws_secret_access_key]
+  def initialize opts={}
+    @aws_access_key_id     = opts[:aws_access_key_id]
+    @aws_secret_access_key = opts[:aws_secret_access_key]
+    @bucket                = opts[:aws_s3_bucket]
   end
 
   def store file, options
-    obj = client.bucket(options['bucket']).object(object_name(options))
+    obj = client.bucket(@bucket).object(object_name(options))
+    # Make this private!
     obj.put(body: file, acl: 'public-read')
     obj.public_url
   end

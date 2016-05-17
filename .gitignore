@@ -1,3 +1,5 @@
 .DS_Store
 .rspec
 coverage/*
+.env.development
+.env.test
