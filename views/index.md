@@ -13,6 +13,7 @@ Features
 * Works with both fillable and non-fillable (e.g., scanned) PDFs
 * Dynamically generates HTML forms for any fillable PDF
 * Provides developers with field name lookup service to facilitate the rapid development of client applications
+* Provides remote file storage using Amazon S3
 
 Under the Hood
 --------------
@@ -50,6 +51,13 @@ Generating HTML Forms
 **To get a generic HTML representation of any fillable PDF form**
 
 `/form?pdf={URL To PDF}`
+
+Storing Filled PDFs
+-------------------
+
+To store a file remotely, issue a `POST` request to `/store`.  POST data should be in the format of key => value where key represents the field name and value represents the field value. Be sure to pass a key of "pdf" with the URL of the PDF to fill.  Also required is a REMOTE_PATH parameter, describing where to store the data.
+
+`POST /store?pdf={URL TO PDF}&remote_path=path/for/this/file`
 
 Non-Fillable PDFs
 -----------------
@@ -96,6 +104,8 @@ Setting up
 Running
 -------
 
+**Prior to running, copy .env.template to .env.development and .env.testing.  Update exported variables as appropriate.  AWS variables are required for remote storage to properly function**
+
 To run, simply run the command `ruby app.rb` from the project's directory. The service will be exposed on port `4567` by default.
 
 You can freely use PDF Filler as a web service. But if you'd like to grab the source code and host it locally, it's actually pretty easy.
@@ -112,7 +122,7 @@ PDF Filler is simple to deploy as a backend service on your server.  Follow the 
 Hosting 
 ------
 
-The app is designed to be hosted on hosting services like heroku. If using Heroku, be sure to select the "Bamboo" build (which comes compiled with pdftk) and set an environment config for `PATH_TO_PDFTK` to `/usr/bin/pdftk`.
+The app is designed to be hosted on hosting services like heroku. If using Heroku, be sure to select the "Bamboo" build (which comes compiled with pdftk) and set an environment config for `PATH_TO_PDFTK` to `/usr/bin/pdftk`.  Also, be sure to set AWS variables from .env.template as required.
 
 Examples
 --------
