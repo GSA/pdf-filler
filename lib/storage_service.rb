@@ -11,7 +11,7 @@ class StorageService
   def store file, options
     obj = client.bucket(@bucket).object(object_name(options))
     # Make this private!
-    obj.put(body: file, acl: 'public-read')
+    obj.put(body: file, acl: @acl)
     obj.public_url
   end
 
