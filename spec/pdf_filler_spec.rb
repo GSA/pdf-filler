@@ -3,10 +3,6 @@ require 'spec_helper'
 describe 'PdfFiller' do
   TEST_PDF = 'http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf'
 
-  def app
-    Sinatra::Application
-  end
-
   describe "GET /" do
     it "should return 200" do
       get '/'
@@ -54,6 +50,43 @@ describe 'PdfFiller' do
         file = File.open( uncompressed.path, 'rb' )
         contents = file.read
         contents.should =~ /MYGOV/
+      end
+    end
+  end
+
+  describe 'POST /store' do
+    let(:params) {
+      {
+        pdf: './spec/sample.pdf',
+        remote_path: 'some/path/for/file',
+      }
+    }
+
+    before(:each) {
+      allow_any_instance_of(StorageService).to receive('store').and_return('http://test.pdf')
+      ENV['AUTHORIZATION_TOKEN'] = 'abc'
+    }
+
+    context "without auth token" do
+      it "should require authorization token to be sent" do
+        post '/store', params
+        expect(last_response).to be_unauthorized
+        expect(last_response.body).to eq 'Not authorized'
+      end
+    end
+
+    context "with auth token" do
+      before(:each) { header 'AUTHORIZATION', 'abc' }
+
+      it "should fill the pdf" do
+        post '/store', params
+        expect(last_response).to be_ok
+        expect(last_response.body).to eq 'http://test.pdf'
+      end
+
+      it "should store the pdf" do
+        expect_any_instance_of(StorageService).to receive(:store)
+        post '/store', params
       end
     end
   end

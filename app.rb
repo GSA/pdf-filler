@@ -58,33 +58,34 @@ get '/form' do
 end
 
 # Fill and store a pdf using the StorageService - return the url of the stored file
-get '/store' do
-  authorized! do |creds|
-    storer = StorageService.new(creds)
-    storer.store(fill(params).path, params)
+post '/store' do
+  begin
+    authorized! do |creds|
+      storer = StorageService.new(creds)
+      storer.store(fill(params).path, params)
+    end
+  rescue AuthorizationError
+    [401, 'Not authorized']
   end
 end
 
 ##### HELPER METHODS: #####
 
 def authorized!
-  auth_token = request.env['HTTP_AUTHORIZATION']
-  if auth_token && creds = authorized?(auth_token)
-    yield creds
-  else
-    raise AuthorizationError.new("authorization token not found")
-  end
+  authorized? ? yield(creds) : raise(AuthorizationError.new("authorization token not found"))
 end
 
-def authorized? token
-  if ENV['AUTHORIZATION_TOKEN'] == token
-    {
-      aws_access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
-      aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-      aws_s3_bucket:         ENV['AWS_S3_BUCKET'],
-      aws_s3_acl:            ENV['AWS_S3_ACL']
-    }
-  end
+def authorized?
+  ENV['AUTHORIZATION_TOKEN'] == request.env['HTTP_AUTHORIZATION']
+end
+
+def creds
+  {
+    aws_access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+    aws_s3_bucket:         ENV['AWS_S3_BUCKET'],
+    aws_s3_acl:            ENV['AWS_S3_ACL']
+  }
 end
 
 def fill params
