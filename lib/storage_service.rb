@@ -5,12 +5,12 @@ class StorageService
     @aws_access_key_id     = opts[:aws_access_key_id]
     @aws_secret_access_key = opts[:aws_secret_access_key]
     @bucket                = opts[:aws_s3_bucket]
-    @acl                   = opts['aws_s3_acl']
+    @acl                   = opts[:aws_s3_acl]
   end
 
   def store file, options
     obj = client.bucket(@bucket).object(object_name(options))
-    # Make this private!
+    puts @acl
     obj.put(body: file, acl: @acl)
     obj.public_url
   end
