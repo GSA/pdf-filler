@@ -62,7 +62,7 @@ post '/store' do
   begin
     authorized! do |creds|
       storer = StorageService.new(creds)
-      storer.store(fill(params).path, params)
+      storer.store(fill(params), params)
     end
   rescue AuthorizationError
     [401, 'Not authorized']
