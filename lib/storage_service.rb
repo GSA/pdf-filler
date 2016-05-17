@@ -5,6 +5,7 @@ class StorageService
     @aws_access_key_id     = opts[:aws_access_key_id]
     @aws_secret_access_key = opts[:aws_secret_access_key]
     @bucket                = opts[:aws_s3_bucket]
+    @acl                   = opts['aws_s3_acl']
   end
 
   def store file, options
