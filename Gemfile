@@ -9,9 +9,11 @@ gem 'prawn', '1.0.0.rc2' # Do not bump!  This is the last version that supports 
 gem 'json'
 gem 'markdown'
 gem 'shotgun'
+gem 'aws-sdk', '~> 2.2.37'
 
 group :development, :test do
   gem 'byebug'
+  gem 'sinatra-contrib'
 end
 
 group :test do
