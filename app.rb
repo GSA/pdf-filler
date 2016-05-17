@@ -3,7 +3,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'sinatra'
-require 'sinatra/reloader'# if development?
+require 'sinatra/reloader' if development?
 require 'thin'
 require 'liquid'
 require 'aws-sdk'
