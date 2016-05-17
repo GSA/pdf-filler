@@ -1,39 +1,98 @@
 # app.rb
 require 'rubygems'
+require 'bundler/setup'
+
 require 'sinatra'
+require 'sinatra/reloader' if development?
 require 'thin'
-require 'open-uri'
-require 'markdown'
 require 'liquid'
-require File.dirname(__FILE__) + "/lib/pdf_filler.rb"
+require 'aws-sdk'
+
+require_relative 'lib/pdf_filler'
+require_relative 'lib/storage_service'
 
 set :root, File.dirname(__FILE__)
 set :views, File.dirname(__FILE__) + "/views"
 
 # documentation
-get '/' do 
-  markdown :index, :layout => :bootstrap, :layout_engine => :liquid
-end
-
-# return a filled PDF as a result of post data
-post '/fill' do
-  send_file PdfFiller.new.fill( params['pdf'], params ).path, :type => "application/pdf", :filename => File.basename( params['pdf'] ), :disposition => :inline
+get '/' do
+  markdown :index,
+            layout: :bootstrap,
+            layout_engine: :liquid
 end
 
 # get an HTML listing of all the fields
 # e.g., /fields.html?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf
 get '/fields' do
-  liquid :fields, :locals => { :pdf => params['pdf'], :fields => PdfFiller.new.get_fields( params['pdf'] ) }, :layout => :bootstrap
+  liquid  :fields,
+          locals: {
+            pdf: params['pdf'],
+            fields: fields(params)
+          },
+          layout: :bootstrap
 end
 
 # return JSON list of field names
 # e.g., /fields.json?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf
 get '/fields.json' do
-  PdfFiller.new.get_fields( params['pdf'] ).to_json
+  fields(params).to_json
+end
+
+# return a filled PDF as a result of post data
+post '/fill' do
+  send_file fill(params).path,
+    disposition: :inline,
+    type:        "application/pdf",
+    filename:    File.basename(params['pdf'])
 end
 
 # get an HTML representation of the form
 # e.g., /form.html?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf
 get '/form' do
-  liquid :form, :locals => { :pdf => params['pdf'], :fields => PdfFiller.new.get_fields( params['pdf'] ) }, :layout => :bootstrap
+  liquid :form,
+          locals: {
+            pdf: params['pdf'],
+            fields: fields(params)
+          },
+          layout: :bootstrap
 end
+
+# Fill and store a pdf using the StorageService - return the url of the stored file
+post '/store' do
+  begin
+    authorized! do |creds|
+      storer = StorageService.new(creds)
+      storer.store(file: fill(params), bucket: params['bucket'], path: params['path'])
+    end
+  rescue AuthorizationError
+    [401, 'Not authorized']
+  end
+end
+
+##### HELPER METHODS: #####
+
+def authorized!
+  authorized? ? yield(creds) : raise(AuthorizationError.new("authorization token not found"))
+end
+
+def authorized?
+  ENV['AUTHORIZATION_TOKEN'] == request.env['HTTP_AUTHORIZATION']
+end
+
+def creds
+  {
+    aws_access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+    aws_s3_acl:            ENV['AWS_S3_ACL']
+  }
+end
+
+def fill params
+  PdfFiller.new.fill( params['pdf'], params )
+end
+
+def fields params
+  PdfFiller.new.get_fields( params['pdf'] )
+end
+
+class AuthorizationError < StandardError; end
