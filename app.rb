@@ -62,7 +62,7 @@ post '/store' do
   begin
     authorized! do |creds|
       storer = StorageService.new(creds)
-      storer.store(fill(params), params)
+      storer.store(file: fill(params), bucket: params['bucket'], path: params['path'])
     end
   rescue AuthorizationError
     [401, 'Not authorized']
@@ -83,7 +83,6 @@ def creds
   {
     aws_access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-    aws_s3_bucket:         ENV['AWS_S3_BUCKET'],
     aws_s3_acl:            ENV['AWS_S3_ACL']
   }
 end

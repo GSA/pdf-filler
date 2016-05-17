@@ -11,8 +11,7 @@ describe 'PdfFiller' do
 
     it "should show the README" do
       get '/'
-      last_response.body.should contain(/PDF Filler/)
-      last_response.body.should =~ /PDF Filler is a RESTful service \(API\) to aid in the completion of existing PDF-based forms/
+      last_response.should =~ /PDF Filler/
     end
   end
 
@@ -57,13 +56,16 @@ describe 'PdfFiller' do
   describe 'POST /store' do
     let(:params) {
       {
-        pdf: './spec/sample.pdf',
-        remote_path: 'some/path/for/file',
+        pdf: TEST_PDF,
+        path: 'some/path/for/file',
+        bucket: 'test'
       }
     }
 
     before(:each) {
-      allow_any_instance_of(StorageService).to receive('store').and_return('http://test.pdf')
+      allow_any_instance_of(StorageService).to \
+        receive('store').
+        and_return('http://test/some/path/test.pdf')
       ENV['AUTHORIZATION_TOKEN'] = 'abc'
     }
 
@@ -81,11 +83,16 @@ describe 'PdfFiller' do
       it "should fill the pdf" do
         post '/store', params
         expect(last_response).to be_ok
-        expect(last_response.body).to eq 'http://test.pdf'
+        expect(last_response.body).to eq 'http://test/some/path/test.pdf'
       end
 
       it "should store the pdf" do
-        expect_any_instance_of(StorageService).to receive(:store)
+        expect_any_instance_of(StorageService).to \
+          receive(:store).with(
+            file: kind_of(Tempfile),
+            bucket: 'test',
+            path: params[:path]
+          )
         post '/store', params
       end
     end

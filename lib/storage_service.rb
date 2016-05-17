@@ -4,13 +4,11 @@ class StorageService
   def initialize opts={}
     @aws_access_key_id     = opts[:aws_access_key_id]
     @aws_secret_access_key = opts[:aws_secret_access_key]
-    @bucket                = opts[:aws_s3_bucket]
     @acl                   = opts[:aws_s3_acl]
   end
 
-  def store file, options
-    obj = client.bucket(@bucket).object(object_name(options))
-    puts @acl
+  def store file:, bucket:, path:
+    obj = client.bucket(bucket).object(File.join(path, File.basename(file)))
     obj.put(body: file, acl: @acl)
     obj.public_url
   end
@@ -25,9 +23,5 @@ class StorageService
       region: 'us-east-1',
       credentials: Aws::Credentials.new(*creds)
     )
-  end
-
-  def object_name options
-    File.join(options['remote_path'], File.basename(options['pdf']))
   end
 end
