@@ -61,31 +61,34 @@ Structuring the HTML Form
 
 Data can be submitted programmatically (e.g. via an API) or as a standard web-based form. For example, to structure an HTML form, you may do so as follows:
 
-```html 
+```html
 
     <form method="post" action ="/fill">
-      
+
       <!-- A standard, fillable field, simply pass the field name -->
       <label>First Name: <input type="text" name="first_name" /><label>
-      
+
       <!-- A non-fillable field for which we pass coordinates -->
       <label>Last Name: <input type="text" name="100,100,1" /><label>
-      
+
       <input type="submit" value="Submit" />
-      
+
     </form>
-    
+
 ```
 
 Requirements
 ------------
-
 * Latest stable version of Ruby (+ the Bundler gem)
 * PDFtk
 
+OR
+
+* Docker
+
 Setting up
 ----------
-
+_(If running in Docker, skip to 'Running' section)_
 1. Install the latest version of Ruby if not already installed (`$ \curl -L https://get.rvm.io | bash -s stable --ruby`)
 2. Install [PDFtk](http://www.pdflabs.com/docs/install-pdftk/)
 3. Install bundler if not already installed (`gem install bundler`)
@@ -95,8 +98,16 @@ Setting up
 
 Running
 -------
+#### Local
+To run, simply run the command `ruby app.rb` from the project's directory.
 
-To run, simply run the command `ruby app.rb` from the project's directory. The service will be exposed on port `4567` by default.
+#### Docker
+```
+$ docker-compose build
+$ docker-compose up
+```
+
+For both methods the service will be exposed on port `4567` by default.
 
 You can freely use PDF Filler as a web service. But if you'd like to grab the source code and host it locally, it's actually pretty easy.
 
@@ -109,7 +120,7 @@ Deploying
 
 PDF Filler is simple to deploy as a backend service on your server.  Follow the instructions here: http://www.kalzumeus.com/2010/01/15/deploying-sinatra-on-ubuntu-in-which-i-employ-a-secretary/ as an example of how to deploy and set up the app as a backend service on your machine.  There is a file called daemon.rb that is part of the app for this purpose.
 
-Hosting 
+Hosting
 ------
 
 The app is designed to be hosted on hosting services like heroku. If using Heroku, be sure to select the "Bamboo" build (which comes compiled with pdftk) and set an environment config for `PATH_TO_PDFTK` to `/usr/bin/pdftk`.
@@ -123,7 +134,7 @@ Examples
 Contributing
 ------------
 
-Anyone is encouraged to contribute to the project by [forking](https://help.github.com/articles/fork-a-repo) and submitting a pull request. (If you are new to GitHub, you might start with a [basic tutorial](https://help.github.com/articles/set-up-git).) 
+Anyone is encouraged to contribute to the project by [forking](https://help.github.com/articles/fork-a-repo) and submitting a pull request. (If you are new to GitHub, you might start with a [basic tutorial](https://help.github.com/articles/set-up-git).)
 
 By contributing to this project, you grant a world-wide, royalty-free, perpetual, irrevocable, non-exclusive, transferable license to all users under the terms of the [MIT](http://opensource.org/licenses/mit-license.php) License.
 
