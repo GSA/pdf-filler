@@ -1,0 +1,12 @@
+version: "3"
+services:
+  pdf_filler:
+    build: .
+    image: pdf-filler
+    volumes:
+      - .:/app
+    ports:
+      - "4567:4567"
+    command: ruby /app/app.rb -o '0.0.0.0'
+    tty: true
+    stdin_open: true
