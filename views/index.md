@@ -40,7 +40,9 @@ Field names can be discovered locally using open-source PDF utility pdftk, or dy
 Filling Out Forms
 -----------------
 
-To fill out a PDF, issue a `POST` request to `/fill`. POST data should be in the format of key => value where key reprents the field name and value represents the field value. Be sure to pass a key of "pdf" with the URL of the PDF to fill. The service will return the filled in PDF as a download.
+To fill out a PDF, issue a `POST` request to `/fill`. POST data should be in the format of key => value where key represents the field name and value represents the field value. Be sure to pass a key of "pdf" with the URL of the PDF to fill. The service will return the filled in PDF as a download.
+
+*Note: Due to the way HTML handles forms, certain special characters such as square brackets will not properly POST to the service. If the PDF field contains reserved characters, simply [urlencode](http://en.wikipedia.org/wiki/Percent-encoding) the field name prior to POSTing.*
 
 Generating HTML Forms
 ---------------------
@@ -75,12 +77,30 @@ Data can be submitted programmatically (e.g. via an API) or as a standard web-ba
     
 ```
 
+Requirements
+------------
+
+* Latest stable version of Ruby (+ the Bundler gem)
+* PDFtk
+
+Setting up
+----------
+
+1. Install the latest version of Ruby if not already installed (`$ \curl -L https://get.rvm.io | bash -s stable --ruby`)
+2. Install [PDFtk](http://www.pdflabs.com/docs/install-pdftk/)
+3. Install bundler if not already installed (`gem install bundler`)
+4. Install git if not already installed (or simply download the repository and unzip in the following step)
+5. Clone the git repository (`git clone git@github.com:GSA-OCSIT/pdf-filler.git` and `cd` into the target directory (most likely `pdf-filler`)
+6. `bundle install`
+
 Running
 -------
 
-You can freely use PDF Filler as a web service. But if you'd like to grab the source code and host it locally, it's actually pretty easy.`
+To run, simply run the command `ruby app.rb` from the project's directory. The service will be exposed on port `4567` by default.
 
-PDF Filler uses pdftk to handle the action form filling. pdftk can be [freely downloaded and installed](http://www.pdflabs.com/docs/install-pdftk/) on most systems. If installed at a location other than ``, be sure to update the configuration.
+You can freely use PDF Filler as a web service. But if you'd like to grab the source code and host it locally, it's actually pretty easy.
+
+PDF Filler uses pdftk to handle the action form filling. pdftk can be [freely downloaded and installed](http://www.pdflabs.com/docs/install-pdftk/) on most systems. If installed at a location other than `/usr/local/bin/pdftk`, be sure to update the configuration by setting the environmental variable `PATH_TO_PDFTK` to the proper path.
 
 PDF Filler is written in Ruby and uses [Sinatra](http://www.sinatrarb.com/) to generate a RESTful API
 
@@ -97,8 +117,8 @@ The app is designed to be hosted on hosting services like heroku. If using Herok
 Examples
 --------
 
-* [Fields](http://pdf-filler.heroku.com/fields?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
-* [Form](http://pdf-filler.heroku.com/form?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+* [Fields](http://labs.data.gov/pdf-filler/fields?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
+* [Form](http://labs.data.gov/pdf-filler/form?pdf=http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf)
 
 Contributing
 ------------

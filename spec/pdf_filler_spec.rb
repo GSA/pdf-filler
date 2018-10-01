@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'PdfFiller' do
-
   TEST_PDF = 'http://help.adobe.com/en_US/Acrobat/9.0/Samples/interactiveform_enabled.pdf'
 
   def app
@@ -16,38 +15,47 @@ describe 'PdfFiller' do
     
     it "should show the README" do
       get '/'
-      last_response.should =~ /PDF Form Filler/
-      last_response.should =~ /RESTful service to fill both fillable and unfillable forms/
+      last_response.body.should contain(/PDF Filler/)
+      last_response.body.should =~ /PDF Filler is a RESTful service \(API\) to aid in the completion of existing PDF-based forms/
     end
-
   end
   
   describe "POST /fill" do
-    
     it "should return the PDF" do 
-      post "/fill", :pdf => TEST_PDF
+      post "/fill", :pdf => "./spec/sample.pdf"
       last_response.should be_ok
       last_response.headers['Content-Type'].should eq( 'application/pdf' )
     end
     
     it "should fill fields" do
-      
-      post "/fill", :pdf => TEST_PDF, :Name_Last => "_MYGOV_FILLABLE_", :"100,100,1" => "_MYGOV_NON_FILLABLE_"
+      post "/fill", :pdf => "./spec/sample.pdf", :Name_Last => "_MYGOV_FILLABLE_", :"100,100,1" => "_MYGOV_NON_FILLABLE_"
       
       compressed = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
       uncompressed = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
       compressed << last_response.body
       
-      pdftk = PdfForms.new( '/usr/local/bin/pdftk' )
+      pdftk = PdfForms.new(PATH_TO_PDFTK)
       pdftk.call_pdftk compressed.path, 'output', uncompressed.path, 'uncompress'
        
       file = File.open( uncompressed.path, 'rb' )
       contents = file.read
       contents.include?('_MYGOV_FILLABLE_').should be_true
-      #contents.include?('_MYGOV_NON_FILLABLE_').should be_true
-      
+      #contents.include?('_MYGOV_NON_FILLABLE_').should be_true      
     end
-  
+    
+    context "when the PDF file has weird field names" do
+      it "should still fill the fields properly" do
+        post "/fill", :pdf => "./spec/ss-5.pdf", "topmostSubform%5B0%5D.Page5%5B0%5D.firstname%5B0%5D" => "_MYGOV_FILLABLE_"
+        compressed = Tempfile.new(['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT')
+        uncompressed = Tempfile.new( ['pdf', '.pdf'], nil , :encoding => 'ASCII-8BIT' )
+        compressed << last_response.body
+        pdftk = PdfForms.new(PATH_TO_PDFTK)
+        pdftk.call_pdftk compressed.path, 'output', uncompressed.path, 'uncompress'
+        file = File.open( uncompressed.path, 'rb' )
+        contents = file.read
+        contents.should =~ /MYGOV/
+      end
+    end
   end  
   
   describe "GET /fields" do
@@ -67,7 +75,7 @@ describe 'PdfFiller' do
   end
   
   describe "GET /form" do
-    it "should create a form for the pdf base don fields" do
+    it "should create a form for the pdf based on fields" do
       get "/form", :pdf => './spec/sample.pdf'
       last_response.should be_ok
       last_response.body.should =~ /PHD/
