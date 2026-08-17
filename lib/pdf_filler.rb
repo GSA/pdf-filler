@@ -30,7 +30,17 @@ class PdfFiller
   # Given a PDF an array of fields -> values
   # return a PDF with the given fields filled out
   def fill( url, data )
-    source_pdf = open( URI.escape( url ) )
+    uri = URI.parse(URI.escape(url))
+    source_pdf = Tempfile.new(['source_pdf', '.pdf'])
+    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      request = Net::HTTP::Get.new(uri)
+      http.request(request) do |response|
+        response.read_body do |chunk|
+          source_pdf.write(chunk)
+        end
+      end
+    end
+    source_pdf.rewind
     step_1_result = Tempfile.new( ['pdf', '.pdf'] )
     filled_pdf = Tempfile.new( ['pdf', '.pdf'] )
     
@@ -55,7 +65,18 @@ class PdfFiller
   def get_fields(url)
     #note: we're talking to PDFTK directly here
     # the native @pdftk.get_field_names doesn't seem to work on many government PDFs
-    fields = @pdftk.call_pdftk( open( URI.escape( url ) ).path, 'dump_data_fields' )
+    uri = URI.parse(URI.escape(url))
+    source_pdf = Tempfile.new(['source_pdf', '.pdf'])
+    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      request = Net::HTTP::Get.new(uri)
+      http.request(request) do |response|
+        response.read_body do |chunk|
+          source_pdf.write(chunk)
+        end
+      end
+    end
+    source_pdf.rewind
+    fields = @pdftk.call_pdftk(source_pdf.path, 'dump_data_fields')
     fields = fields.split("---")
     @output = []
     fields.each do |field|
